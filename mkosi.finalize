@@ -1,0 +1,16 @@
+#!/bin/sh
+if [ "${SKIP_SYFT}" = "1" ]
+then
+	echo Skipping syft
+	exit 0
+fi
+
+export SYFT_CHECK_FOR_APP_UPDATE=0
+
+syft scan dir:${BUILDROOT} \
+	--source-name ${IMAGE_ID} \
+	--source-version ${IMAGE_VERSION} \
+	-o cyclonedx-json=${OUTPUTDIR}/${IMAGE_ID}_${IMAGE_VERSION}.cyclonedx.json \
+	-o github-json=${OUTPUTDIR}/${IMAGE_ID}_${IMAGE_VERSION}.github.json \
+	-o spdx-json=${OUTPUTDIR}/${IMAGE_ID}_${IMAGE_VERSION}.spdx.json \
+	-o syft-json=${OUTPUTDIR}/${IMAGE_ID}_${IMAGE_VERSION}.syft.json
