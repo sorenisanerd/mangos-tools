@@ -22,7 +22,6 @@ jobs:
           fetch-depth: 0
       - uses: dsaltares/fetch-gh-release-asset@master
         id: tools-fetch
-        if: false
         with:
           repo: ${{ github.repository }}
           version: latest
@@ -31,7 +30,6 @@ jobs:
           target: 'dl/'
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Verify tools signature
-        if: false
         env:
           tag: ${{ steps.tools-fetch.outputs.version }}
         run: |
@@ -40,15 +38,12 @@ jobs:
                               --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
                               dl/mangos.tools_*.tar.zst
       - name: Decompress and stage tools
-        if: false
         run: mkdir mkosi.tools ; tar -x --zstd -f dl/mangos.tools_*.tar.zst -C mkosi.tools
       - name: Install syft
         run: DOWNLOAD_TAG_INSTALL_SCRIPT=false mkosi sandbox -- sh ./syft-install.sh -v -b . -dd v1.28.0
       - name: Copy cosign into place
         run: cp $HOME/.cosign/cosign .
       - name: Run mkosi
-        env:
-          SKIP_SYFT: 1
         run: mkosi --debug
       - name: Remove symlinks
         run: find out/ -type l -delete
