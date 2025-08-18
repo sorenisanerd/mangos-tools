@@ -13,7 +13,7 @@ jobs:
       - name: Install cosign
         uses: sigstore/cosign-installer@v3.9.1
       - name: setup-mkosi
-        uses: sorenisanerd/mkosi@eb6a98f897a799b659099ac4798bdebdb716db8f
+        uses: sorenisanerd/mkosi@main
       - name: Checkout code
         uses: actions/checkout@v4
         with:
