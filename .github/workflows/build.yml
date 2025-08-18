@@ -12,10 +12,8 @@ jobs:
     steps:
       - name: Install cosign
         uses: sigstore/cosign-installer@v3.9.1
-      - name: Prevent man-db dpkg trigger (speeds up setup-mkosi)
-        run: sudo sed '/man-db/ d' -i /var/lib/dpkg/triggers/File
       - name: setup-mkosi
-        uses: systemd/mkosi@v25.3
+        uses: sorenisanerd/mkosi@eb6a98f897a799b659099ac4798bdebdb716db8f
       - name: Checkout code
         uses: actions/checkout@v4
         with:
