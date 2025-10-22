@@ -1,0 +1,6 @@
+#!/bin/bash
+cd ${BUILDDIR}
+dpkg-source -x ${SRCDIR}/pkg/systemd/systemd_258.1-1.dsc
+cd systemd-258.1
+dpkg-buildpackage -us -uc -b
+mv ../*.deb ${PACKAGEDIR}/

@@ -1,0 +1,7 @@
+#!/bin/bash
+pkg=${SRCDIR}/pkg/systemd
+mkdir -p "$pkg"
+cd "$pkg"
+for url in http://deb.debian.org/debian/pool/main/s/systemd/systemd_258.1{-1.dsc,.orig.tar.gz,-1.debian.tar.xz}; do
+    test -f "$(basename "$url")" || wget -O "$(basename "$url")" "$url"
+done
