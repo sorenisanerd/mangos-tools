@@ -3,4 +3,9 @@ cd ${BUILDDIR}
 dpkg-source -x ${SRCDIR}/pkg/systemd/systemd_258.1-1.dsc
 cd systemd-258.1
 dpkg-buildpackage -us -uc -b
-mv ../*.deb ${PACKAGEDIR}/
+cd ..
+tarball=mangos-packages_${IMAGE_VERSION}.tar
+tar cf ${tarball} *.{deb,ddeb}
+zstd --rm ${tarball}
+mv ${tarball}.zst ${ARTIFACTDIR}/
+mv *.deb ${PACKAGEDIR}/
