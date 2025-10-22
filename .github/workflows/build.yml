@@ -47,13 +47,20 @@ jobs:
         run: find out/ -type l -delete
       - name: Sign artifacts
         run: for file in out/* ; do cosign sign-blob -d -y --bundle "${file}.sigbundle" "${file}"; done
-      - name: Upload build artifact
-        id: upload
+      - name: Upload tools artifact
+        id: upload-tools
         uses: actions/upload-artifact@v4
         with:
-          path: out/*
+          path: out/mangos.tools*
           compression-level: 0
           name: mangos.tools
+      - name: Upload package artifact
+        id: upload-pkgs
+        uses: actions/upload-artifact@v4
+        with:
+          path: out/mangos-packages*
+          compression-level: 0
+          name: mangos.packages
       - name: Release
         if: github.ref_type == 'tag'
         uses: softprops/action-gh-release@v2
