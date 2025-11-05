@@ -42,7 +42,7 @@ jobs:
       - name: Copy cosign into place
         run: cp $HOME/.cosign/cosign .
       - name: Run mkosi
-        run: mkosi --debug
+        run: mkosi --debug --profile=build-systemd
       - name: Remove symlinks
         run: find out/ -type l -delete
       - name: Sign artifacts
