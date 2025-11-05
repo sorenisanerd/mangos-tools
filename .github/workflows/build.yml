@@ -58,7 +58,7 @@ jobs:
         id: upload-pkgs
         uses: actions/upload-artifact@v4
         with:
-          path: out/mangos-packages*
+          path: out/mangos.packages*
           compression-level: 0
           name: mangos.packages
       - name: Release

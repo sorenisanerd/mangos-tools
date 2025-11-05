@@ -24,4 +24,7 @@ mkosi.tools:
 	rm -rf mkosi.tools
 	version="$$(mkosi summary --json | jq .Images[0].ImageVersion -r)"; mkdir mkosi.tools ; tar -xf out/mangos.tools_$${version}.tar.zst --zstd -C mkosi.tools 
 
-.PHONY: mkosi.tools
+mkosi.packages:
+	version="$$(mkosi summary --json | jq .Images[0].ImageVersion -r)"; mkdir mkosi.packages ; tar -xf out/mangos.packages_$${version}.tar.zst --zstd -C mkosi.packages
+
+.PHONY: mkosi.tools mkosi.packages

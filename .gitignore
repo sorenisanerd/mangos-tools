@@ -1,6 +1,7 @@
 /.cache
 /out
 /mkosi.tools
+/mkosi.packages
 /cosign
 /syft
 /syft*.tar.gz

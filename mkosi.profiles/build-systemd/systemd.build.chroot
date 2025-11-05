@@ -8,7 +8,7 @@ cd systemd-258.1
 patch -p1 < ${SRCDIR}/mkosi.profiles/build-systemd/sysupdated.patch
 dpkg-buildpackage -us -uc -b
 cd ..
-tarball=mangos-packages_${IMAGE_VERSION}.tar
+tarball=mangos.packages_${IMAGE_VERSION}.tar
 tar cf ${tarball} *.{deb,ddeb}
 zstd --rm ${tarball}
 mv ${tarball}.zst ${ARTIFACTDIR}/
