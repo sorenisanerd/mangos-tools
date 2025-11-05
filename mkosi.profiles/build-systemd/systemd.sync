@@ -2,6 +2,6 @@
 pkg=${SRCDIR}/pkg/systemd
 mkdir -p "$pkg"
 cd "$pkg"
-for url in http://deb.debian.org/debian/pool/main/s/systemd/systemd_258.1{-1.dsc,.orig.tar.gz,-1.debian.tar.xz}; do
+for url in http://ftp.debian.org/debian/pool/main/s/systemd/systemd_258.1{-2{.dsc,.debian.tar.xz},.orig.tar.gz}; do
     test -f "$(basename "$url")" || wget -O "$(basename "$url")" "$url"
 done
