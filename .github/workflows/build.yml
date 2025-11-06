@@ -42,7 +42,7 @@ jobs:
       - name: Copy cosign into place
         run: cp $HOME/.cosign/cosign .
       - name: Run mkosi
-        run: mkosi --debug
+        run: mkosi --debug --profile=build-systemd
       - name: Remove symlinks
         run: find out/ -type l -delete
       - name: Sign artifacts
@@ -58,7 +58,7 @@ jobs:
         id: upload-pkgs
         uses: actions/upload-artifact@v4
         with:
-          path: out/mangos-packages*
+          path: out/mangos.packages*
           compression-level: 0
           name: mangos.packages
       - name: Release
