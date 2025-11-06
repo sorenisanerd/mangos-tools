@@ -1,19 +1,34 @@
 diff -urNw systemd-258.1.orig/debian/changelog systemd-258.1/debian/changelog
---- systemd-258.1.orig/debian/changelog	2025-10-27 06:06:14.000000000 -0700
-+++ systemd-258.1/debian/changelog	2025-11-05 14:59:50.450027607 -0800
+--- systemd-258.1.orig/debian/changelog	2025-11-04 01:35:17.000000000 -0800
++++ systemd-258.1/debian/changelog	2025-11-06 11:50:55.192685337 -0800
 @@ -1,3 +1,9 @@
-+systemd (258.1-2mangos1) unstable; urgency=medium
++systemd (258.1-2ubuntu1mangos1) unstable; urgency=medium
 +
-+  * Enable sysupdated.
++  * Enable systemd-updated and updatectl.
 +
-+ -- Soren Hansen <Soren.Hansen@mastercard.com>  Thu, 23 Oct 2025 11:23:25 -0700
++ -- Soren Hansen <soren.hansen@mastercard.com>  Thu, 06 Nov 2025 11:29:05 -0800
 +
- systemd (258.1-2) unstable; urgency=medium
+ systemd (258.1-2ubuntu1) resolute; urgency=medium
  
-   [ Luca Boccassi ]
+   * Merge with Debian unstable (LP: #2130132). Remaining changes:
+diff -urNw systemd-258.1.orig/debian/control systemd-258.1/debian/control
+--- systemd-258.1.orig/debian/control	2025-11-03 06:02:38.000000000 -0800
++++ systemd-258.1/debian/control	2025-11-06 11:54:17.089591773 -0800
+@@ -552,9 +552,9 @@
+ Recommends: ${dlopen:Recommends},
+ Suggests: ${dlopen:Suggests},
+ Breaks: systemd-boot (<< 257.4-2~),
+-        systemd (<< 257.7-2~),
++        systemd (<< 258~),
+ Replaces: systemd-boot (<< 257.4-2~),
+-          systemd (<< 257.7-2~),
++          systemd (<< 258~),
+ Description: simple UEFI boot manager - tools
+  systemd-boot (short: sd-boot) is a simple UEFI boot manager. It provides a
+  textual menu to select the entry to boot and an editor for the kernel command
 diff -urNw systemd-258.1.orig/debian/rules systemd-258.1/debian/rules
---- systemd-258.1.orig/debian/rules	2025-10-22 09:35:40.000000000 -0700
-+++ systemd-258.1/debian/rules	2025-11-05 15:00:48.476676601 -0800
+--- systemd-258.1.orig/debian/rules	2025-11-04 01:26:51.000000000 -0800
++++ systemd-258.1/debian/rules	2025-11-06 11:50:55.193600945 -0800
 @@ -149,7 +149,8 @@
  	-Dpcre2=enabled \
  	-Dukify=enabled \
@@ -35,8 +50,8 @@ diff -urNw systemd-258.1.orig/debian/rules systemd-258.1/debian/rules
  
  # BPF/BTF are only enabled and usable on a few architectures
 diff -urNw systemd-258.1.orig/debian/systemd-container.install systemd-258.1/debian/systemd-container.install
---- systemd-258.1.orig/debian/systemd-container.install	2025-10-22 09:35:41.000000000 -0700
-+++ systemd-258.1/debian/systemd-container.install	2025-11-05 15:00:48.476812175 -0800
+--- systemd-258.1.orig/debian/systemd-container.install	2025-11-03 06:02:38.000000000 -0800
++++ systemd-258.1/debian/systemd-container.install	2025-11-06 11:50:55.193688764 -0800
 @@ -1,6 +1,6 @@
  #!/usr/bin/dh-exec
  usr/bin/importctl
@@ -75,91 +90,9 @@ diff -urNw systemd-258.1.orig/debian/systemd-container.install systemd-258.1/deb
  usr/share/zsh/vendor-completions/_systemd-nspawn
  usr/share/zsh/vendor-completions/_sd_machines
  usr/share/zsh/vendor-completions/_machinectl
-diff -urNw systemd-258.1.orig/debian/systemd-container.install.orig systemd-258.1/debian/systemd-container.install.orig
---- systemd-258.1.orig/debian/systemd-container.install.orig	1969-12-31 16:00:00.000000000 -0800
-+++ systemd-258.1/debian/systemd-container.install.orig	2025-10-22 09:35:41.000000000 -0700
-@@ -0,0 +1,78 @@
-+#!/usr/bin/dh-exec
-+usr/bin/importctl
-+<pkg.systemd.upstream> usr/bin/updatectl
-+usr/bin/systemd-vmspawn
-+usr/lib/systemd/system/systemd-vmspawn@.service
-+usr/bin/machinectl
-+usr/bin/portablectl
-+usr/lib/systemd/import-pubring.*
-+usr/lib/systemd/network/80-namespace-ns*
-+usr/lib/systemd/portable
-+usr/lib/systemd/systemd-machined
-+usr/lib/systemd/systemd-export
-+usr/lib/systemd/systemd-import*
-+usr/lib/systemd/systemd-mountfsd
-+usr/lib/systemd/systemd-mountwork
-+usr/lib/systemd/systemd-nsresourced
-+usr/lib/systemd/systemd-nsresourcework
-+usr/lib/systemd/systemd-portabled
-+usr/lib/systemd/systemd-pull
-+usr/lib/systemd/systemd-sysupdate*
-+usr/lib/systemd/system-generators/systemd-import-generator
-+usr/lib/systemd/system/sockets.target.wants/systemd-import*
-+usr/lib/systemd/system/systemd-nspawn@.service
-+usr/lib/systemd/system/systemd-import*
-+usr/lib/systemd/system/systemd-machined*
-+usr/lib/systemd/system/systemd-mountfsd*
-+usr/lib/systemd/system/systemd-nsresourced*
-+usr/lib/systemd/system/systemd-portabled.service
-+usr/lib/systemd/system/systemd-sysupdate*
-+usr/lib/systemd/system/var-lib-machines.mount
-+usr/lib/systemd/system/machines.target
-+usr/lib/systemd/system/*.target.wants/systemd-machined*
-+usr/lib/systemd/system/*.target.wants/var-lib-machines.mount
-+usr/lib/systemd/system/dbus-org.freedesktop.import1.service
-+usr/lib/systemd/system/dbus-org.freedesktop.machine1.service
-+usr/lib/systemd/system/dbus-org.freedesktop.portable1.service
-+<pkg.systemd.upstream> usr/lib/systemd/system/dbus-org.freedesktop.sysupdate1.service
-+usr/lib/systemd/user/machine.slice
-+usr/lib/systemd/user/machines.target
-+<pkg.systemd.upstream> usr/lib/systemd/user/dbus-org.freedesktop.import1.service
-+<pkg.systemd.upstream> usr/lib/systemd/user/dbus-org.freedesktop.machine1.service
-+<pkg.systemd.upstream> usr/lib/systemd/user/sockets.target.wants/systemd-importd.socket
-+<pkg.systemd.upstream> usr/lib/systemd/user/sockets.target.wants/systemd-machined.socket
-+<pkg.systemd.upstream> usr/lib/systemd/user/systemd-importd.service
-+<pkg.systemd.upstream> usr/lib/systemd/user/systemd-importd.socket
-+<pkg.systemd.upstream> usr/lib/systemd/user/systemd-machined.service
-+<pkg.systemd.upstream> usr/lib/systemd/user/systemd-machined.socket
-+usr/lib/systemd/user/systemd-nspawn@.service
-+usr/lib/systemd/user/systemd-vmspawn@.service
-+usr/bin/systemd-dissect
-+usr/bin/systemd-nspawn
-+usr/lib/tmpfiles.d/portables.conf
-+usr/lib/tmpfiles.d/systemd-nspawn.conf
-+usr/sbin/mount.ddi
-+<pkg.systemd.upstream> usr/share/dbus-1/services/org.freedesktop.import1.service
-+<pkg.systemd.upstream> usr/share/dbus-1/services/org.freedesktop.machine1.service
-+usr/share/dbus-1/system.d/org.freedesktop.import1.conf
-+usr/share/dbus-1/system.d/org.freedesktop.machine1.conf
-+usr/share/dbus-1/system.d/org.freedesktop.portable1.conf
-+<pkg.systemd.upstream> usr/share/dbus-1/system.d/org.freedesktop.sysupdate1.conf
-+usr/share/dbus-1/system-services/org.freedesktop.import1.service
-+usr/share/dbus-1/system-services/org.freedesktop.machine1.service
-+usr/share/dbus-1/system-services/org.freedesktop.portable1.service
-+<pkg.systemd.upstream> usr/share/dbus-1/system-services/org.freedesktop.sysupdate1.service
-+usr/share/polkit-1/actions/io.systemd.mount-file-system.policy
-+usr/share/polkit-1/actions/io.systemd.namespace-resource.policy
-+usr/share/polkit-1/actions/org.freedesktop.import1.policy
-+usr/share/polkit-1/actions/org.freedesktop.machine1.policy
-+usr/share/polkit-1/actions/org.freedesktop.portable1.policy
-+<pkg.systemd.upstream> usr/share/polkit-1/actions/org.freedesktop.sysupdate1.policy
-+usr/share/zsh/vendor-completions/_systemd-nspawn
-+usr/share/zsh/vendor-completions/_sd_machines
-+usr/share/zsh/vendor-completions/_machinectl
-+usr/share/bash-completion/completions/machinectl
-+usr/share/bash-completion/completions/portablectl
-+usr/share/bash-completion/completions/systemd-nspawn
-+usr/share/bash-completion/completions/systemd-vmspawn
-+usr/share/bash-completion/completions/importctl
 diff -urNw systemd-258.1.orig/debian/systemd-container.manpages systemd-258.1/debian/systemd-container.manpages
---- systemd-258.1.orig/debian/systemd-container.manpages	2025-10-22 09:35:41.000000000 -0700
-+++ systemd-258.1/debian/systemd-container.manpages	2025-11-05 15:00:48.476900591 -0800
+--- systemd-258.1.orig/debian/systemd-container.manpages	2025-11-03 06:02:38.000000000 -0800
++++ systemd-258.1/debian/systemd-container.manpages	2025-11-06 11:50:55.196428755 -0800
 @@ -1,11 +1,11 @@
  #!/usr/bin/dh-exec
  debian/tmp/usr/share/man/man1/importctl.1

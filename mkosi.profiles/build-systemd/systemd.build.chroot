@@ -3,7 +3,7 @@
 set -e
 
 cd ${BUILDDIR}
-dpkg-source -x ${SRCDIR}/pkg/systemd/systemd_258.1-2.dsc
+dpkg-source -x ${SRCDIR}/pkg/systemd/systemd_258.1-2ubuntu1.dsc
 cd systemd-258.1
 patch -p1 < ${SRCDIR}/mkosi.profiles/build-systemd/sysupdated.patch
 dpkg-buildpackage -us -uc -b

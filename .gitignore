@@ -5,3 +5,4 @@
 /cosign
 /syft
 /syft*.tar.gz
+/pkg
